@@ -207,7 +207,7 @@ async function fetchLatestSystemRun(system) {
   }
 }
 
-app.get("/api/test-results", async (c) => {
+app.get("*", async (c) => {
   try {
     const mockResults = generateMockTestResults();
 
