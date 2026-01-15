@@ -204,7 +204,7 @@ function App() {
         /\/+$/,
         ""
       );
-      const url = `${baseUrl}/api/test-results?_t=${timestamp}`;
+      const url = `${baseUrl}/api/index?_t=${timestamp}`;
       const response = await axios.get<TestResultsResponse>(url, {
         headers: {
           "Cache-Control": "no-cache",
