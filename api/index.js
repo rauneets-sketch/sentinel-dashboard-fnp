@@ -1,13 +1,9 @@
-import { Hono } from "hono";
-import { handle } from "@hono/node-server/vercel";
 import { createClient } from "@supabase/supabase-js";
-
-const app = new Hono();
 
 const supabaseUrl =
   process.env.SUPABASE_URL || "https://wnymknrycmldwqzdqoct.supabase.co";
 const supabaseKey =
-  process.env.SUPABASE_KEY || "your_supabase_service_role_key_here";
+  process.env.SUPABASE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndueW1rbnJ5Y21sZHdxemRxb2N0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NzcwMDk1MywiZXhwIjoyMDgzMjc2OTUzfQ.HCK8yC6jRIb67LUxOEEXI_dLs_fXcLK6m4_50iN8tPU";
 
 const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
@@ -207,7 +203,13 @@ async function fetchLatestSystemRun(system) {
   }
 }
 
-app.get("*", async (c) => {
+export default async function handler(req, res) {
+  if (req.method !== "GET") {
+    res.statusCode = 405;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Method not allowed" }));
+    return;
+  }
   try {
     const mockResults = generateMockTestResults();
 
@@ -330,11 +332,13 @@ app.get("*", async (c) => {
       };
     }
 
-    return c.json(mockResults);
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(mockResults));
   } catch (error) {
-    console.error("Error in /api/test-results:", error);
-    return c.json({ error: "Failed to fetch test results" }, 500);
+    console.error("Error in /api/index:", error);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Failed to fetch test results" }));
   }
-});
-
-export default handle(app);
+}
