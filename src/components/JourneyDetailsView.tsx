@@ -2,14 +2,23 @@ import { useState } from "react";
 import type React from "react";
 
 interface JourneyStep {
-  category: string;
-  action: string;
+  category?: string;
+  action?: string;
+  step_name?: string;
+  status?: string;
+  duration_ms?: number;
+  error_message?: string;
+  error_type?: string;
 }
 
 interface Journey {
   id: number;
   name: string;
   steps: JourneyStep[];
+  status?: string;
+  passed?: number;
+  failed?: number;
+  duration?: number;
 }
 
 const DESKTOP_JOURNEYS: Journey[] = [
@@ -72,7 +81,10 @@ const DESKTOP_JOURNEYS: Journey[] = [
       { category: "Reminder Management", action: "Schedule Gift" },
       { category: "Navigation", action: "Navigate to FAQ Section" },
       { category: "FAQ Management", action: "Explore FAQ Categories" },
-      { category: "Order Completion", action: "Reminder and FAQ Flow Completed" },
+      {
+        category: "Order Completion",
+        action: "Reminder and FAQ Flow Completed",
+      },
     ],
   },
   {
@@ -92,7 +104,10 @@ const DESKTOP_JOURNEYS: Journey[] = [
         action: "Add International Product to Cart",
       },
       { category: "Payment Process", action: "Test International Payment" },
-      { category: "Order Completion", action: "International Purchase Completed" },
+      {
+        category: "Order Completion",
+        action: "International Purchase Completed",
+      },
     ],
   },
   {
@@ -100,13 +115,19 @@ const DESKTOP_JOURNEYS: Journey[] = [
     name: "Combinational Purchase",
     steps: [
       { category: "User Authentication", action: "Navigate to Login Page" },
-      { category: "Product Selection", action: "Navigate to Anniversary Product" },
+      {
+        category: "Product Selection",
+        action: "Navigate to Anniversary Product",
+      },
       { category: "Product Selection", action: "Select Domestic Product" },
       { category: "Delivery Setup", action: "Set Domestic Delivery Date" },
       { category: "Cart Management", action: "Add Domestic Product to Cart" },
       { category: "Navigation", action: "Navigate to International Section" },
       { category: "Location Setup", action: "Select USA as Destination" },
-      { category: "Product Selection", action: "Navigate to International Section" },
+      {
+        category: "Product Selection",
+        action: "Navigate to International Section",
+      },
       {
         category: "Product Selection",
         action: "Select International Anniversary Product",
@@ -117,7 +138,10 @@ const DESKTOP_JOURNEYS: Journey[] = [
         action: "Add International Product and Checkout",
       },
       { category: "Payment Process", action: "Test Combinational Payment" },
-      { category: "Order Completion", action: "Combinational Purchase Completed" },
+      {
+        category: "Order Completion",
+        action: "Combinational Purchase Completed",
+      },
     ],
   },
   {
@@ -125,12 +149,21 @@ const DESKTOP_JOURNEYS: Journey[] = [
     name: "Cake Variant Testing",
     steps: [
       { category: "User Authentication", action: "Navigate to Login Page" },
-      { category: "Navigation", action: "Navigate to Fudge Brownie Cake Product" },
+      {
+        category: "Navigation",
+        action: "Navigate to Fudge Brownie Cake Product",
+      },
       { category: "Delivery Setup", action: "Set Cake Variant Delivery Date" },
       { category: "Variant Testing", action: "Change the Cake Variant" },
       { category: "Payment Process", action: "Proceed to Payment" },
-      { category: "Payment Process", action: "Test QR Payment for Cake Variant" },
-      { category: "Order Completion", action: "Cake Variant Testing Completed" },
+      {
+        category: "Payment Process",
+        action: "Test QR Payment for Cake Variant",
+      },
+      {
+        category: "Order Completion",
+        action: "Cake Variant Testing Completed",
+      },
     ],
   },
   {
@@ -161,13 +194,22 @@ const DESKTOP_JOURNEYS: Journey[] = [
     id: 11,
     name: "Personalized Product Purchase",
     steps: [
-      { category: "Navigation", action: "Navigate to Personalized Water Bottle" },
+      {
+        category: "Navigation",
+        action: "Navigate to Personalized Water Bottle",
+      },
       { category: "Personalization", action: "Add Custom Text 'ASTHA SINGH'" },
-      { category: "Cart Management", action: "Add Personalized Product to Cart" },
+      {
+        category: "Cart Management",
+        action: "Add Personalized Product to Cart",
+      },
       { category: "Payment Process", action: "Proceed to Payment Page" },
       { category: "Payment Process", action: "Test QR Payment Method" },
       { category: "Navigation", action: "Navigate Back to Homepage" },
-      { category: "Order Completion", action: "Personalized Purchase Completed" },
+      {
+        category: "Order Completion",
+        action: "Personalized Purchase Completed",
+      },
     ],
   },
   {
@@ -183,16 +225,25 @@ const DESKTOP_JOURNEYS: Journey[] = [
       { category: "Payment Process", action: "Proceed to Payment Page" },
       { category: "Payment Process", action: "Test QR Payment Method" },
       { category: "Navigation", action: "Return to Homepage" },
-      { category: "Order Completion", action: "Message Card Purchase Completed" },
+      {
+        category: "Order Completion",
+        action: "Message Card Purchase Completed",
+      },
     ],
   },
   {
     id: 13,
     name: "Product Exploration Journey",
     steps: [
-      { category: "Product Navigation", action: "Navigate to Exotic Blue Orchid" },
+      {
+        category: "Product Navigation",
+        action: "Navigate to Exotic Blue Orchid",
+      },
       { category: "Photo Gallery", action: "Open Main Product Image" },
-      { category: "Product Details", action: "Check Description & Instructions" },
+      {
+        category: "Product Details",
+        action: "Check Description & Instructions",
+      },
       { category: "Journey Step", action: "Navigate Back To FNP Homepage" },
       { category: "Order Completion", action: "Product Exploration Completed" },
     ],
@@ -201,25 +252,37 @@ const DESKTOP_JOURNEYS: Journey[] = [
     id: 14,
     name: "Same SKU Product Exploration",
     steps: [
-      { category: "Product Navigation", action: "Navigate to Jade Plant Product" },
+      {
+        category: "Product Navigation",
+        action: "Navigate to Jade Plant Product",
+      },
       {
         category: "Delivery Setup",
         action: "Set Courier Delivery Date & Time Slot",
       },
       { category: "Cart Management", action: "Add Product to Cart (Courier)" },
       { category: "Journey Step", action: "Navigate Back To FNP Homepage" },
-      { category: "Order Completion", action: "Same SKU Exploration Completed" },
+      {
+        category: "Order Completion",
+        action: "Same SKU Exploration Completed",
+      },
     ],
   },
   {
     id: 15,
     name: "Search Based Purchase",
     steps: [
-      { category: "Search Function", action: "Search for 'cake' in Search Bar" },
+      {
+        category: "Search Function",
+        action: "Search for 'cake' in Search Bar",
+      },
       { category: "Delivery Setup", action: "Set Delivery Date & Time Slot" },
       { category: "Cart Management", action: "Add Search Product to Cart" },
       { category: "Payment Process", action: "Test QR Payment Method" },
-      { category: "Order Completion", action: "Search Based Purchase Completed" },
+      {
+        category: "Order Completion",
+        action: "Search Based Purchase Completed",
+      },
     ],
   },
   {
@@ -230,8 +293,14 @@ const DESKTOP_JOURNEYS: Journey[] = [
         category: "Navigation",
         action: "Navigate to Personalized Cushion Product",
       },
-      { category: "Photo Upload", action: "Upload Custom Photo from Local Path" },
-      { category: "Cart Management", action: "Add Personalized Product to Cart" },
+      {
+        category: "Photo Upload",
+        action: "Upload Custom Photo from Local Path",
+      },
+      {
+        category: "Cart Management",
+        action: "Add Personalized Product to Cart",
+      },
       { category: "Payment Process", action: "Test QR Payment Method" },
       { category: "Navigation", action: "Navigate Back to Homepage" },
       { category: "Navigation", action: "Navigate to Fridge Magnet Product" },
@@ -245,14 +314,20 @@ const DESKTOP_JOURNEYS: Journey[] = [
       },
       { category: "Cart Management", action: "Add Fridge Magnet to Cart" },
       { category: "Payment Process", action: "Test QR Payment Method" },
-      { category: "Order Completion", action: "Multi-Photo Upload Journey Completed" },
+      {
+        category: "Order Completion",
+        action: "Multi-Photo Upload Journey Completed",
+      },
     ],
   },
   {
     id: 17,
     name: "Location Testing",
     steps: [
-      { category: "Navigation", action: "Navigate to Homepage for Location Journey" },
+      {
+        category: "Navigation",
+        action: "Navigate to Homepage for Location Journey",
+      },
       { category: "Location Change", action: "Select New Pincode Gurgaon" },
       { category: "Location Change", action: "Select Delhi Location" },
       {
@@ -260,13 +335,19 @@ const DESKTOP_JOURNEYS: Journey[] = [
         action: "Navigate to PLP and Select Existing Bangalore Pincode",
       },
       { category: "Location Change", action: "Select Gorakhpur Pincode" },
-      { category: "Location Change", action: "Select Final Bangalore Location" },
+      {
+        category: "Location Change",
+        action: "Select Final Bangalore Location",
+      },
       {
         category: "Navigation",
         action: "Return to Homepage After Location Testing",
       },
       { category: "Order Completion", action: "Location Testing Completed" },
-      { category: "Navigation", action: "Navigate to Homepage for Icon Exploration" },
+      {
+        category: "Navigation",
+        action: "Navigate to Homepage for Icon Exploration",
+      },
     ],
   },
   {
@@ -274,7 +355,10 @@ const DESKTOP_JOURNEYS: Journey[] = [
     name: "Spherical Home Page Icon Exploration",
     steps: [
       { category: "Category Navigation", action: "Explore Spherical Icons" },
-      { category: "Order Completion", action: "Spherical Icon Exploration Completed" },
+      {
+        category: "Order Completion",
+        action: "Spherical Icon Exploration Completed",
+      },
     ],
   },
   {
@@ -286,7 +370,10 @@ const DESKTOP_JOURNEYS: Journey[] = [
       { category: "Gmail OTP Journey", action: "Open Account Drawer" },
       { category: "Gmail OTP Journey", action: "Perform Gmail OTP Login" },
       { category: "Gmail OTP Journey", action: "Verify Login Success" },
-      { category: "Order Completion", action: "All Journeys Completed Successfully" },
+      {
+        category: "Order Completion",
+        action: "All Journeys Completed Successfully",
+      },
     ],
   },
 ];
@@ -297,10 +384,16 @@ const MOBILE_JOURNEYS: Journey[] = [
     name: "Mobile Home Page Exploration",
     steps: [
       { category: "User Authentication", action: "Navigate to Mobile Login" },
-      { category: "User Authentication", action: "Dismiss Mobile Notification" },
+      {
+        category: "User Authentication",
+        action: "Dismiss Mobile Notification",
+      },
       { category: "User Authentication", action: "Click Mobile Guest Login" },
       { category: "Homepage Setup", action: "Set Mobile Delivery Location" },
-      { category: "Product Discovery", action: "Navigate to Gift Finder Mobile" },
+      {
+        category: "Product Discovery",
+        action: "Navigate to Gift Finder Mobile",
+      },
       { category: "Product Selection", action: "Select Product on Mobile" },
       { category: "Cart Management", action: "Add Product to Mobile Cart" },
       { category: "Payment Process", action: "Mobile Payment Processing" },
@@ -329,7 +422,10 @@ const MOBILE_JOURNEYS: Journey[] = [
       { category: "Delivery Setup", action: "Set Mobile Delivery Slot" },
       { category: "Cart Management", action: "Add to Mobile Cart" },
       { category: "Payment Process", action: "Mobile Payment" },
-      { category: "Order Completion", action: "Mobile Search Purchase Complete" },
+      {
+        category: "Order Completion",
+        action: "Mobile Search Purchase Complete",
+      },
     ],
   },
   {
@@ -348,7 +444,10 @@ const MOBILE_JOURNEYS: Journey[] = [
     name: "Mobile International Purchase",
     steps: [
       { category: "Navigation", action: "Navigate to International Section" },
-      { category: "Location Setup", action: "Select International Destination" },
+      {
+        category: "Location Setup",
+        action: "Select International Destination",
+      },
       { category: "Product Selection", action: "Select International Product" },
       { category: "Delivery Setup", action: "Set International Delivery" },
       { category: "Payment Process", action: "International Mobile Payment" },
@@ -363,7 +462,10 @@ const MOBILE_JOURNEYS: Journey[] = [
       { category: "Location Change", action: "Select New Location" },
       { category: "Navigation", action: "Browse Products by Location" },
       { category: "Location Change", action: "Switch Location Again" },
-      { category: "Order Completion", action: "Mobile Location Testing Complete" },
+      {
+        category: "Order Completion",
+        action: "Mobile Location Testing Complete",
+      },
     ],
   },
   {
@@ -396,7 +498,10 @@ const MOBILE_JOURNEYS: Journey[] = [
       { category: "Cart Management", action: "Add to Cart" },
       { category: "Coupon Testing", action: "Apply Coupon Code" },
       { category: "Payment Process", action: "Mobile Payment" },
-      { category: "Order Completion", action: "Mobile Coupon Testing Complete" },
+      {
+        category: "Order Completion",
+        action: "Mobile Coupon Testing Complete",
+      },
     ],
   },
   {
@@ -407,7 +512,10 @@ const MOBILE_JOURNEYS: Journey[] = [
       { category: "Profile Management", action: "Update Phone Number" },
       { category: "Navigation", action: "Return to Homepage" },
       { category: "Product Discovery", action: "Browse Products" },
-      { category: "Order Completion", action: "Mobile Profile Update Complete" },
+      {
+        category: "Order Completion",
+        action: "Mobile Profile Update Complete",
+      },
     ],
   },
 ];
@@ -644,12 +752,17 @@ const JOURNEYS_DATA: Journey[] = DESKTOP_JOURNEYS;
 
 interface JourneyDetailsViewProps {
   platform?: string;
+  testData?: any; // Real test data from Supabase
 }
 
 type PlatformType = "desktop" | "mobile" | "oms" | "partner";
 
-export function JourneyDetailsView({ platform }: JourneyDetailsViewProps) {
-  const [selectedPlatform, setSelectedPlatform] = useState<PlatformType>("desktop");
+export function JourneyDetailsView({
+  platform,
+  testData,
+}: JourneyDetailsViewProps) {
+  const [selectedPlatform, setSelectedPlatform] =
+    useState<PlatformType>("desktop");
   const [expandedJourney, setExpandedJourney] = useState<number | null>(null);
 
   const toggleJourney = (journeyId: number) => {
@@ -657,6 +770,20 @@ export function JourneyDetailsView({ platform }: JourneyDetailsViewProps) {
   };
 
   const getJourneyData = (plat: PlatformType): Journey[] => {
+    // Use real data from Supabase if available, otherwise fall back to mock data
+    if (testData && testData[plat] && testData[plat].modules) {
+      return testData[plat].modules.map((module: any, index: number) => ({
+        id: index + 1,
+        name: module.name || `Journey ${index + 1}`,
+        status: module.status || (module.failed > 0 ? "FAILED" : "PASSED"),
+        passed: module.passed || 0,
+        failed: module.failed || 0,
+        duration: module.duration || 0,
+        steps: module.steps || [],
+      }));
+    }
+
+    // Fallback to mock data
     switch (plat) {
       case "mobile":
         return MOBILE_JOURNEYS;
@@ -717,7 +844,7 @@ export function JourneyDetailsView({ platform }: JourneyDetailsViewProps) {
       "Order Management": "#3498DB",
       "Customer Details": "#9B59B6",
       "Order Tracking": "#1ABC9C",
-      "Inventory": "#E67E22",
+      Inventory: "#E67E22",
       "Refund Management": "#E74C3C",
       Reporting: "#27AE60",
       "Customer Management": "#F39C12",
@@ -779,11 +906,7 @@ export function JourneyDetailsView({ platform }: JourneyDetailsViewProps) {
         >
           <i className="fas fa-handshake" /> Partner Panel
         </button>
-        <button
-          className="tab coming-soon"
-          disabled
-          title="Coming Soon"
-        >
+        <button className="tab coming-soon" disabled title="Coming Soon">
           <i className="fab fa-android" /> Android
         </button>
       </div>
@@ -809,11 +932,34 @@ export function JourneyDetailsView({ platform }: JourneyDetailsViewProps) {
                     }`}
                   />
                 </span>
-                <span className="journey-full-title">Journey {journey.id} - {journey.name}</span>
+                <span className="journey-full-title">
+                  Journey {journey.id} - {journey.name}
+                </span>
+                {journey.status && (
+                  <span
+                    className={`journey-status ${journey.status.toLowerCase()}`}
+                  >
+                    {journey.status === "FAILED" ? "❌" : "✅"} {journey.status}
+                  </span>
+                )}
               </div>
               <div className="journey-meta">
+                {journey.passed !== undefined &&
+                  journey.failed !== undefined && (
+                    <span className="journey-stats">
+                      <span className="passed-count">✅ {journey.passed}</span>
+                      <span className="failed-count">❌ {journey.failed}</span>
+                    </span>
+                  )}
+                {journey.duration && (
+                  <span className="journey-duration">
+                    <i className="fas fa-clock" />{" "}
+                    {(journey.duration / 1000).toFixed(1)}s
+                  </span>
+                )}
                 <span className="step-count">
-                  <i className="fas fa-list-check" /> {journey.steps.length} steps
+                  <i className="fas fa-list-check" /> {journey.steps.length}{" "}
+                  steps
                 </span>
               </div>
             </div>
@@ -821,24 +967,69 @@ export function JourneyDetailsView({ platform }: JourneyDetailsViewProps) {
             {expandedJourney === journey.id && (
               <div className="journey-steps">
                 <div className="steps-timeline">
-                  {journey.steps.map((step, index) => (
-                    <div key={index} className="step-item">
-                      <div className="step-number">{index + 1}</div>
-                      <div className="step-content">
-                        <div className="step-category">
-                          <span
-                            className="category-badge"
-                            style={{
-                              backgroundColor: getCategoryColor(step.category),
-                            }}
-                          >
-                            {step.category}
-                          </span>
+                  {journey.steps.map((step, index) => {
+                    // Handle both mock data (category/action) and real data (step_name/status)
+                    const stepName =
+                      step.step_name || step.action || `Step ${index + 1}`;
+                    const stepCategory = step.category || "General";
+                    const stepStatus = step.status;
+                    const stepDuration = step.duration_ms;
+                    const stepError = step.error_message;
+
+                    return (
+                      <div
+                        key={index}
+                        className={`step-item ${stepStatus ? stepStatus.toLowerCase() : ""}`}
+                      >
+                        <div className="step-number">
+                          {index + 1}
+                          {stepStatus && (
+                            <span
+                              className={`step-status-icon ${stepStatus.toLowerCase()}`}
+                            >
+                              {stepStatus === "FAILED"
+                                ? "❌"
+                                : stepStatus === "PASSED"
+                                  ? "✅"
+                                  : "⏸️"}
+                            </span>
+                          )}
                         </div>
-                        <div className="step-action">{step.action}</div>
+                        <div className="step-content">
+                          <div className="step-category">
+                            <span
+                              className="category-badge"
+                              style={{
+                                backgroundColor: getCategoryColor(stepCategory),
+                              }}
+                            >
+                              {stepCategory}
+                            </span>
+                            {stepStatus && (
+                              <span
+                                className={`status-badge ${stepStatus.toLowerCase()}`}
+                              >
+                                {stepStatus}
+                              </span>
+                            )}
+                          </div>
+                          <div className="step-action">{stepName}</div>
+                          {stepDuration && (
+                            <div className="step-duration">
+                              <i className="fas fa-stopwatch" /> {stepDuration}
+                              ms
+                            </div>
+                          )}
+                          {stepError && (
+                            <div className="step-error">
+                              <i className="fas fa-exclamation-triangle" />{" "}
+                              {stepError}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
