@@ -202,7 +202,7 @@ function App() {
       const timestamp = Date.now();
       const baseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(
         /\/+$/,
-        ""
+        "",
       );
       const url = `${baseUrl}/api/index?_t=${timestamp}`;
       const response = await axios.get<TestResultsResponse>(url, {
@@ -419,7 +419,7 @@ function App() {
     } else {
       overviewChartRef.current = Highcharts.chart(
         "overviewChart",
-        overviewOptions
+        overviewOptions,
       );
     }
 
@@ -687,7 +687,7 @@ function App() {
 
   function showModules(
     platform: PlatformKey,
-    event?: React.MouseEvent<HTMLButtonElement>
+    event?: React.MouseEvent<HTMLButtonElement>,
   ) {
     const journeyNames: Record<number, string> = {
       1: "Home Page Exploration",
@@ -844,14 +844,7 @@ function App() {
             <span id="liveUpdateTime">just now</span>
           </div>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 20,
-          }}
-          id="liveStatsGrid"
-        />
+        <div className="responsive-stats-grid" id="liveStatsGrid" />
       </div>
 
       <div className="modules-section">
@@ -859,15 +852,7 @@ function App() {
           <i className="fas fa-chart-line" />
           Overall
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 20,
-            marginTop: 20,
-          }}
-          id="statsGrid"
-        />
+        <div className="responsive-stats-grid" id="statsGrid" />
       </div>
 
       <div className="modules-section">
