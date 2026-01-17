@@ -239,51 +239,149 @@ function App() {
     const ios = testData.ios;
 
     const cards: string[] = [];
+
+    // Desktop Site Card
     if (desktop) {
+      const successRate =
+        desktop.total > 0
+          ? Math.round((desktop.passed / desktop.total) * 100)
+          : 0;
+      const avgTime = (desktop.duration / 1000).toFixed(3);
+      const status = desktop.failed > 0 ? "ISSUES DETECTED" : "ALL SYSTEMS GO";
+      const statusClass =
+        desktop.failed > 0 ? "status-error" : "status-success";
+
       cards.push(`
-        <div class="stat-card">
-          <div class="stat-icon desktop-bg"><i class="fas fa-laptop-code"></i></div>
-          <div class="stat-value">${desktop.total}</div>
-          <div class="stat-label">Desktop Site Tests Today</div>
+        <div class="detailed-stat-card desktop-border">
+          <div class="card-header">
+            <div class="card-icon desktop-bg"><i class="fas fa-laptop-code"></i></div>
+            <div class="card-title">Desktop Site</div>
+          </div>
+          <div class="card-content">
+            <div class="automation-info">FNP Automation Framework - Playwright Test Suite</div>
+            <div class="platform-info">Platform: <span class="platform-value">WEB</span></div>
+            <div class="environment-info">Environment: <span class="env-value">prod</span></div>
+            <div class="duration-info">Duration: <span class="duration-value">${desktop.duration}ms</span></div>
+            <div class="journeys-info">User Journeys: <span class="journeys-value">${desktop.modules?.length || 0}</span></div>
+            <div class="steps-info">Test Steps: <span class="steps-value">${desktop.total}</span></div>
+            <div class="success-info">Success Rate: <span class="success-value">${successRate}%</span></div>
+            <div class="avg-time-info">Avg Step Time: <span class="time-value">${avgTime}ms</span></div>
+            <div class="failed-info">Failed Steps: <span class="failed-value">${desktop.failed}</span></div>
+          </div>
+          <div class="card-status ${statusClass}">Status: ${status} ${desktop.failed > 0 ? "⚠" : "✓"}</div>
         </div>
       `);
     }
+
+    // Mobile Site Card
     if (mobile) {
+      const successRate =
+        mobile.total > 0 ? Math.round((mobile.passed / mobile.total) * 100) : 0;
+      const avgTime = (mobile.duration / 1000).toFixed(3);
+      const status = mobile.failed > 0 ? "ISSUES DETECTED" : "ALL SYSTEMS GO";
+      const statusClass = mobile.failed > 0 ? "status-error" : "status-success";
+
       cards.push(`
-        <div class="stat-card">
-          <div class="stat-icon mobile-bg"><i class="fas fa-mobile-screen"></i></div>
-          <div class="stat-value">${mobile.total}</div>
-          <div class="stat-label">Mobile Site Tests Today</div>
+        <div class="detailed-stat-card mobile-border">
+          <div class="card-header">
+            <div class="card-icon mobile-bg"><i class="fas fa-mobile-screen"></i></div>
+            <div class="card-title">Mobile Site</div>
+          </div>
+          <div class="card-content">
+            <div class="automation-info">FNP Mobile Automation - Playwright Test Suite</div>
+            <div class="platform-info">Platform: <span class="platform-value">MOBILE WEB</span></div>
+            <div class="environment-info">Environment: <span class="env-value">prod</span></div>
+            <div class="duration-info">Duration: <span class="duration-value">${mobile.duration}ms</span></div>
+            <div class="journeys-info">User Journeys: <span class="journeys-value">${mobile.modules?.length || 0}</span></div>
+            <div class="steps-info">Test Steps: <span class="steps-value">${mobile.total}</span></div>
+            <div class="success-info">Success Rate: <span class="success-value">${successRate}%</span></div>
+            <div class="avg-time-info">Avg Step Time: <span class="time-value">${avgTime}ms</span></div>
+            <div class="failed-info">Failed Steps: <span class="failed-value">${mobile.failed}</span></div>
+          </div>
+          <div class="card-status ${statusClass}">Status: ${status} ${mobile.failed > 0 ? "⚠" : "✓"}</div>
         </div>
       `);
     }
+
+    // OMS Card
     if (oms) {
+      const successRate =
+        oms.total > 0 ? Math.round((oms.passed / oms.total) * 100) : 0;
+      const avgTime = (oms.duration / 1000).toFixed(3);
+      const status = oms.failed > 0 ? "ISSUES DETECTED" : "ALL SYSTEMS GO";
+      const statusClass = oms.failed > 0 ? "status-error" : "status-success";
+
       cards.push(`
-        <div class="stat-card">
-          <div class="stat-icon oms-bg"><i class="fas fa-boxes-stacked"></i></div>
-          <div class="stat-value">${oms.total}</div>
-          <div class="stat-label">OMS Tests Today</div>
+        <div class="detailed-stat-card oms-border">
+          <div class="card-header">
+            <div class="card-icon oms-bg"><i class="fas fa-boxes-stacked"></i></div>
+            <div class="card-title">OMS</div>
+          </div>
+          <div class="card-content">
+            <div class="automation-info">FNP OMS Automation - Playwright Test Suite</div>
+            <div class="platform-info">Platform: <span class="platform-value">ADMIN PANEL</span></div>
+            <div class="environment-info">Environment: <span class="env-value">prod</span></div>
+            <div class="duration-info">Duration: <span class="duration-value">${oms.duration}ms</span></div>
+            <div class="journeys-info">User Journeys: <span class="journeys-value">${oms.modules?.length || 0}</span></div>
+            <div class="steps-info">Test Steps: <span class="steps-value">${oms.total}</span></div>
+            <div class="success-info">Success Rate: <span class="success-value">${successRate}%</span></div>
+            <div class="avg-time-info">Avg Step Time: <span class="time-value">${avgTime}ms</span></div>
+            <div class="failed-info">Failed Steps: <span class="failed-value">${oms.failed}</span></div>
+          </div>
+          <div class="card-status ${statusClass}">Status: ${status} ${oms.failed > 0 ? "⚠" : "✓"}</div>
         </div>
       `);
     }
+
+    // Partner Panel Card
     if (android) {
+      const successRate =
+        android.total > 0
+          ? Math.round((android.passed / android.total) * 100)
+          : 0;
+      const avgTime = (android.duration / 1000).toFixed(3);
+      const status = android.failed > 0 ? "ISSUES DETECTED" : "ALL SYSTEMS GO";
+      const statusClass =
+        android.failed > 0 ? "status-error" : "status-success";
+
       cards.push(`
-        <div class="stat-card">
-          <div class="stat-icon android-bg"><i class="fas fa-handshake"></i></div>
-          <div class="stat-value">${android.total}</div>
-          <div class="stat-label">Partner Panel Tests Today</div>
+        <div class="detailed-stat-card android-border">
+          <div class="card-header">
+            <div class="card-icon android-bg"><i class="fas fa-handshake"></i></div>
+            <div class="card-title">Partner Panel</div>
+          </div>
+          <div class="card-content">
+            <div class="automation-info">FNP Partner Automation - Playwright Test Suite</div>
+            <div class="platform-info">Platform: <span class="platform-value">PARTNER WEB</span></div>
+            <div class="environment-info">Environment: <span class="env-value">prod</span></div>
+            <div class="duration-info">Duration: <span class="duration-value">${android.duration}ms</span></div>
+            <div class="journeys-info">User Journeys: <span class="journeys-value">${android.modules?.length || 0}</span></div>
+            <div class="steps-info">Test Steps: <span class="steps-value">${android.total}</span></div>
+            <div class="success-info">Success Rate: <span class="success-value">${successRate}%</span></div>
+            <div class="avg-time-info">Avg Step Time: <span class="time-value">${avgTime}ms</span></div>
+            <div class="failed-info">Failed Steps: <span class="failed-value">${android.failed}</span></div>
+          </div>
+          <div class="card-status ${statusClass}">Status: ${status} ${android.failed > 0 ? "⚠" : "✓"}</div>
         </div>
       `);
     }
+
+    // Android Card (iOS data but labeled as Android)
     if (ios) {
       cards.push(`
-        <div class="stat-card">
-          <div class="stat-icon ios-bg"><i class="fab fa-android"></i></div>
-          <div class="stat-value">${ios.total}</div>
-          <div class="stat-label">Android Tests Today</div>
+        <div class="detailed-stat-card ios-border disabled-card">
+          <div class="card-header">
+            <div class="card-icon ios-bg"><i class="fab fa-android"></i></div>
+            <div class="card-title">Android</div>
+          </div>
+          <div class="card-content">
+            <div class="platform-development">Platform under development</div>
+          </div>
+          <div class="card-status status-disabled">Status: COMING SOON ⏳</div>
         </div>
       `);
     }
+
     liveStatsGrid.innerHTML = cards.join("");
   }
 
