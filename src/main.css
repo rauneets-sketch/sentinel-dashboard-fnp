@@ -774,29 +774,279 @@ body {
   }
 }
 
-/* Make sure stat cards are responsive and properly aligned */
-.stat-card {
-  min-width: 0 !important;
-  width: 100% !important;
-  text-align: center !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
+/* DETAILED STAT CARDS - Live Test Execution Context */
+.detailed-stat-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: all 0.3s ease;
+  border-left: 4px solid;
+  padding: 16px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
 }
 
-.stat-value {
-  margin-bottom: 4px !important;
+.detailed-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow-hover);
 }
 
-.stat-label {
-  text-align: center !important;
-  word-break: break-word !important;
-  hyphens: auto !important;
+.desktop-border {
+  border-left-color: #4caf50;
+}
+.mobile-border {
+  border-left-color: #2196f3;
+}
+.oms-border {
+  border-left-color: #9c27b0;
+}
+.android-border {
+  border-left-color: #ff9800;
+}
+.ios-border {
+  border-left-color: #607d8b;
 }
 
-.stat-icon {
-  margin-bottom: 8px !important;
+.disabled-card {
+  opacity: 0.6;
+  background: #f5f5f5;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.automation-info {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.platform-development {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.platform-info,
+.environment-info,
+.duration-info,
+.journeys-info,
+.steps-info,
+.success-info,
+.avg-time-info,
+.failed-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 0;
+}
+
+.platform-value,
+.env-value,
+.duration-value,
+.journeys-value,
+.steps-value,
+.success-value,
+.time-value,
+.failed-value {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.env-value {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.success-value {
+  color: #4caf50;
+}
+
+.failed-value {
+  color: #f44336;
+}
+
+.card-status {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.status-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-disabled {
+  background: #f5f5f5;
+  color: #666;
+}
+
+/* Responsive adjustments for detailed cards */
+@media (max-width: 900px) {
+  .detailed-stat-card {
+    min-height: 240px;
+    padding: 12px;
+  }
+
+  .card-title {
+    font-size: 14px;
+  }
+
+  .card-content {
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .automation-info {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detailed-stat-card {
+    min-height: 200px;
+    padding: 10px;
+  }
+
+  .card-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .card-title {
+    font-size: 12px;
+  }
+
+  .card-content {
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .automation-info {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 600px) {
+  .detailed-stat-card {
+    min-height: 180px;
+    padding: 8px;
+  }
+
+  .card-header {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .card-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .card-title {
+    font-size: 11px;
+  }
+
+  .card-content {
+    font-size: 9px;
+    gap: 3px;
+  }
+
+  .automation-info {
+    font-size: 8px;
+    margin-bottom: 6px;
+  }
+
+  .card-status {
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .detailed-stat-card {
+    min-height: 160px;
+    padding: 6px;
+  }
+
+  .card-header {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .card-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .card-title {
+    font-size: 10px;
+  }
+
+  .card-content {
+    font-size: 8px;
+    gap: 2px;
+  }
+
+  .automation-info {
+    font-size: 7px;
+    margin-bottom: 4px;
+  }
+
+  .card-status {
+    padding: 4px 6px;
+    font-size: 8px;
+    margin-top: 8px;
+  }
 }
 
 /* Ensure cards don't get too small on mobile - IMPROVED */
