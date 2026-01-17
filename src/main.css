@@ -50,12 +50,86 @@ body {
   );
   min-height: 100vh;
   transition: background 0.3s ease;
+  overflow-x: hidden; /* Prevent horizontal scroll on body */
+}
+
+/* Ensure all content stays within viewport */
+* {
+  box-sizing: border-box;
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* MOBILE IMPROVEMENTS - Make it look like desktop but properly scaled */
+
+/* Container improvements for mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 8px;
+  }
+}
+
+/* Header improvements for mobile */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: row;
+    gap: 10px;
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  .logo-section {
+    justify-content: flex-start;
+    flex: 1;
+  }
+
+  .logo {
+    width: 80px;
+    height: auto;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 11px;
+  }
+
+  .header-controls {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 12px;
+  }
+
+  .logo {
+    width: 60px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .subtitle {
+    font-size: 9px;
+  }
 }
 
 .header {
@@ -70,6 +144,26 @@ body {
   transition:
     background 0.3s ease,
     box-shadow 0.3s ease;
+}
+
+/* Header responsive - IMPROVED */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: row;
+    gap: 10px;
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  .logo-section {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 12px;
+  }
 }
 
 .logo-section {
@@ -111,7 +205,7 @@ body {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   margin-bottom: 0;
 }
@@ -174,12 +268,37 @@ body {
   gap: 15px;
   font-size: 12px;
   margin-top: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .stat-detail {
   display: flex;
   align-items: center;
   gap: 5px;
+  white-space: nowrap;
+}
+
+/* Stat details responsive */
+@media (max-width: 768px) {
+  .stat-details {
+    gap: 8px;
+    font-size: 10px;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-details {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 8px;
+    margin-top: 6px;
+  }
+
+  .stat-detail {
+    justify-content: center;
+  }
 }
 
 .desktop-bg {
@@ -234,9 +353,17 @@ body {
 
 .charts-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
+}
+
+/* Charts responsive */
+@media (max-width: 768px) {
+  .charts-section {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 }
 
 .chart-card {
@@ -245,10 +372,12 @@ body {
   border-radius: 16px;
   box-shadow: 0 2px 12px var(--shadow-color);
   transition: background 0.3s ease;
+  overflow: hidden; /* Prevent content overflow */
 }
 
 .chart-card .highcharts-container {
   width: 100% !important;
+  max-width: 100% !important;
 }
 
 .chart-card canvas,
@@ -258,6 +387,36 @@ body {
 #bubbleChart {
   width: 100% !important;
   height: 400px !important;
+  max-width: 100% !important;
+}
+
+/* Chart responsive improvements */
+@media (max-width: 768px) {
+  .chart-card {
+    padding: 16px;
+  }
+
+  .chart-card canvas,
+  .chart-card .highcharts-container,
+  #overviewChart,
+  #trendChart,
+  #bubbleChart {
+    height: 300px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-card {
+    padding: 12px;
+  }
+
+  .chart-card canvas,
+  .chart-card .highcharts-container,
+  #overviewChart,
+  #trendChart,
+  #bubbleChart {
+    height: 250px !important;
+  }
 }
 
 .full-width-chart {
@@ -273,6 +432,24 @@ body {
   align-items: center;
   gap: 10px;
   letter-spacing: -0.3px;
+  flex-wrap: wrap;
+}
+
+/* Chart title responsive */
+@media (max-width: 768px) {
+  .chart-title {
+    font-size: 16px;
+    margin-bottom: 15px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+    gap: 6px;
+  }
 }
 
 .modules-section {
@@ -282,6 +459,28 @@ body {
   box-shadow: 0 2px 12px var(--shadow-color);
   margin-bottom: 30px;
   transition: background 0.3s ease;
+}
+
+/* Modules section responsive - IMPROVED */
+@media (max-width: 768px) {
+  .modules-section {
+    padding: 16px;
+  }
+
+  .modules-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modules-section {
+    padding: 12px;
+  }
+
+  .modules-grid {
+    gap: 10px;
+  }
 }
 
 .modules-grid {
@@ -297,6 +496,8 @@ body {
   border-radius: 12px;
   border-left: 4px solid #e8b86d;
   transition: all 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .module-card:hover {
@@ -310,6 +511,8 @@ body {
   color: var(--text-primary);
   margin-bottom: 8px;
   letter-spacing: -0.2px;
+  word-wrap: break-word;
+  line-height: 1.3;
 }
 
 .module-stats {
@@ -317,6 +520,8 @@ body {
   justify-content: space-between;
   font-size: 12px;
   color: var(--text-secondary);
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .tabs {
@@ -326,6 +531,32 @@ body {
   border-radius: 999px;
   border: 1px solid #e5e7eb;
   margin-top: 12px;
+}
+
+/* Tabs responsive - IMPROVED */
+@media (max-width: 768px) {
+  .tabs {
+    flex-wrap: wrap;
+    gap: 4px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tab {
+    padding: 6px 10px;
+    font-size: 11px;
+    flex: 1;
+    min-width: 80px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab {
+    padding: 4px 6px;
+    font-size: 9px;
+    min-width: 60px;
+  }
 }
 
 .tab {
@@ -412,4 +643,180 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* DIRECT RESPONSIVE FIXES FOR DASHBOARD */
+#liveStatsGrid,
+#statsGrid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 20px !important;
+  margin-top: 20px !important;
+}
+
+/* Responsive breakpoints for the stats grids */
+@media (max-width: 1200px) {
+  #liveStatsGrid,
+  #statsGrid {
+    gap: 16px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  #liveStatsGrid,
+  #statsGrid {
+    gap: 12px !important;
+  }
+
+  #liveStatsGrid .stat-card,
+  #statsGrid .stat-card {
+    padding: 12px !important;
+    min-height: 100px !important;
+  }
+
+  #liveStatsGrid .stat-value,
+  #statsGrid .stat-value {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+  }
+
+  #liveStatsGrid .stat-label,
+  #statsGrid .stat-label {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #liveStatsGrid,
+  #statsGrid {
+    gap: 10px !important;
+  }
+
+  #liveStatsGrid .stat-card,
+  #statsGrid .stat-card {
+    padding: 10px !important;
+    min-height: 90px !important;
+  }
+
+  #liveStatsGrid .stat-value,
+  #statsGrid .stat-value {
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+  }
+
+  #liveStatsGrid .stat-label,
+  #statsGrid .stat-label {
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #liveStatsGrid,
+  #statsGrid {
+    gap: 8px !important;
+  }
+
+  #liveStatsGrid .stat-card,
+  #statsGrid .stat-card {
+    padding: 8px !important;
+    min-height: 80px !important;
+  }
+
+  #liveStatsGrid .stat-value,
+  #statsGrid .stat-value {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+
+  #liveStatsGrid .stat-label,
+  #statsGrid .stat-label {
+    font-size: 8px !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #liveStatsGrid,
+  #statsGrid {
+    gap: 6px !important;
+  }
+
+  #liveStatsGrid .stat-card,
+  #statsGrid .stat-card {
+    padding: 6px !important;
+    min-height: 70px !important;
+  }
+
+  #liveStatsGrid .stat-value,
+  #statsGrid .stat-value {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+
+  #liveStatsGrid .stat-label,
+  #statsGrid .stat-label {
+    font-size: 7px !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+  }
+
+  #liveStatsGrid .stat-icon,
+  #statsGrid .stat-icon {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+  }
+}
+
+/* Make sure stat cards are responsive and properly aligned */
+.stat-card {
+  min-width: 0 !important;
+  width: 100% !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.stat-value {
+  margin-bottom: 4px !important;
+}
+
+.stat-label {
+  text-align: center !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+}
+
+.stat-icon {
+  margin-bottom: 8px !important;
+}
+
+/* Ensure cards don't get too small on mobile - IMPROVED */
+@media (max-width: 480px) {
+  #liveStatsGrid,
+  #statsGrid {
+    min-width: 320px; /* Minimum container width */
+    overflow-x: auto; /* Allow horizontal scroll if needed */
+    padding-bottom: 4px; /* Space for scroll bar */
+  }
+
+  .stat-card {
+    min-width: 60px !important; /* Minimum card width */
+  }
+}
+
+/* Ensure proper spacing and alignment */
+.responsive-stats-grid .stat-card {
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
