@@ -413,3 +413,127 @@
     font-size: 12px;
   }
 }
+/* Journey Status Styles */
+.journey-status {
+  margin-left: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.journey-status.failed {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.journey-status.passed {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.journey-stats {
+  display: flex;
+  gap: 8px;
+  margin-right: 12px;
+}
+
+.passed-count {
+  color: #22c55e;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.failed-count {
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.journey-duration {
+  margin-right: 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+/* Step Status Styles */
+.step-item.failed {
+  background-color: rgba(239, 68, 68, 0.05);
+  border-left: 3px solid #ef4444;
+}
+
+.step-item.passed {
+  background-color: rgba(34, 197, 94, 0.05);
+  border-left: 3px solid #22c55e;
+}
+
+.step-item.skipped {
+  background-color: rgba(156, 163, 175, 0.05);
+  border-left: 3px solid #9ca3af;
+}
+
+.step-status-icon {
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+.status-badge {
+  margin-left: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.failed {
+  background-color: #ef4444;
+  color: white;
+}
+
+.status-badge.passed {
+  background-color: #22c55e;
+  color: white;
+}
+
+.status-badge.skipped {
+  background-color: #9ca3af;
+  color: white;
+}
+
+.step-duration {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.step-error {
+  font-size: 11px;
+  color: #ef4444;
+  margin-top: 4px;
+  padding: 4px 8px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border-radius: 4px;
+  border-left: 3px solid #ef4444;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .journey-status.failed {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+[data-theme="dark"] .journey-status.passed {
+  background-color: rgba(34, 197, 94, 0.2);
+}
+
+[data-theme="dark"] .step-item.failed {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+[data-theme="dark"] .step-item.passed {
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+[data-theme="dark"] .step-error {
+  background-color: rgba(239, 68, 68, 0.2);
+}
