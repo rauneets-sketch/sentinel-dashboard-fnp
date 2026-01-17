@@ -953,7 +953,7 @@ function App() {
         <div className="responsive-stats-grid" id="statsGrid" />
       </div>
 
-      <JourneyDetailsView />
+      <JourneyDetailsView testData={testData} />
 
       <div className="charts-section">
         <div className="chart-card">
