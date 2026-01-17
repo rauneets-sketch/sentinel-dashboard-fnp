@@ -199,18 +199,15 @@ function App() {
 
   async function loadData() {
     try {
-      const timestamp = Date.now();
-      const baseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(
-        /\/+$/,
-        ""
+      const response = await axios.get<TestResultsResponse>(
+        `/api/test-results?_t=${Date.now()}`,
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+          },
+        }
       );
-      const url = `${baseUrl}/api/index?_t=${timestamp}`;
-      const response = await axios.get<TestResultsResponse>(url, {
-        headers: {
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
-        },
-      });
       setTestData((prev) => {
         if (JSON.stringify(prev) === JSON.stringify(response.data)) return prev;
         return response.data;
@@ -844,14 +841,7 @@ function App() {
             <span id="liveUpdateTime">just now</span>
           </div>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 20,
-          }}
-          id="liveStatsGrid"
-        />
+        <div id="liveStatsGrid" />
       </div>
 
       <div className="modules-section">
@@ -859,15 +849,7 @@ function App() {
           <i className="fas fa-chart-line" />
           Overall
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 20,
-            marginTop: 20,
-          }}
-          id="statsGrid"
-        />
+        <div id="statsGrid" />
       </div>
 
       <div className="modules-section">
