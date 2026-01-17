@@ -855,39 +855,7 @@ function App() {
         <div className="responsive-stats-grid" id="statsGrid" />
       </div>
 
-      <div className="modules-section">
-        <div className="chart-title">
-          <i className="fas fa-puzzle-piece" />
-          Test Modules by Platform
-        </div>
-        <div className="tabs">
-          <button
-            className="tab active"
-            onClick={(e) => showModules("desktop", e as any)}
-          >
-            <i className="fas fa-laptop-code" /> Desktop Site
-          </button>
-          <button
-            className="tab"
-            onClick={(e) => showModules("mobile", e as any)}
-          >
-            <i className="fas fa-mobile-screen" /> Mobile Site
-          </button>
-          <button className="tab" onClick={(e) => showModules("oms", e as any)}>
-            <i className="fas fa-boxes-stacked" /> OMS
-          </button>
-          <button
-            className="tab"
-            onClick={(e) => showModules("android", e as any)}
-          >
-            <i className="fas fa-handshake" /> Partner Panel
-          </button>
-          <button className="tab" onClick={(e) => showModules("ios", e as any)}>
-            <i className="fab fa-android" /> Android
-          </button>
-        </div>
-        <div className="modules-grid" id="modulesGrid" />
-      </div>
+      <JourneyDetailsView />
 
       <div className="charts-section">
         <div className="chart-card">
@@ -905,8 +873,6 @@ function App() {
           <div id="trendChart" />
         </div>
       </div>
-
-      <JourneyDetailsView />
 
       <div className="chart-card full-width-chart">
         <div className="chart-title">
