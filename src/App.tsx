@@ -679,67 +679,74 @@ function App() {
       trendChartRef.current = Highcharts.chart("trendChart", trendOptions);
     }
 
-    const desktopModules = desktop.modules || [];
-    const desktopBubbles = desktopModules.map((module: any) => {
-      const totalSteps =
-        module.totalSteps ||
-        module.steps?.length ||
-        module.passed + module.failed ||
-        1;
-      const passedSteps =
-        module.passed ||
-        module.steps?.filter((s: any) => s.status === "PASSED").length ||
-        0;
-      const successRate = totalSteps > 0 ? (passedSteps / totalSteps) * 100 : 0;
-      const duration = module.duration || 0;
+    // Helper function to process modules for bubble chart
+    const processModulesForBubble = (modules: any[], platformName: string) => {
+      return modules.map((module: any, index: number) => {
+        const totalSteps =
+          module.totalSteps ||
+          module.steps?.length ||
+          (module.passed || 0) + (module.failed || 0) ||
+          1;
+        const passedSteps =
+          module.passed ||
+          module.steps?.filter((s: any) => s.status === "PASSED").length ||
+          0;
+        const successRate =
+          totalSteps > 0 ? (passedSteps / totalSteps) * 100 : 0;
+        const duration = (module.duration || 0) / 1000; // Convert to seconds
 
-      return {
-        x: duration,
-        y: Math.round(successRate),
-        z: totalSteps,
-        name: module.name || "Journey",
-        status: (module as any).status,
-        journeyNumber: (module as any).journeyNumber,
-      };
-    });
+        return {
+          x: duration,
+          y: Math.round(successRate),
+          z: totalSteps,
+          name: module.name || `${platformName} Journey ${index + 1}`,
+          status: module.status,
+          platform: platformName,
+        };
+      });
+    };
 
-    const bubbleSeries: Highcharts.SeriesOptionsType[] = [
-      {
+    const bubbleSeries: Highcharts.SeriesOptionsType[] = [];
+
+    // Add Desktop data
+    if (desktop.modules && desktop.modules.length > 0) {
+      bubbleSeries.push({
         type: "bubble",
-        name: "Desktop Journeys",
-        data: desktopBubbles,
+        name: "Desktop Site",
+        data: processModulesForBubble(desktop.modules, "Desktop"),
         color: "#4CAF50",
-      },
-    ];
+      });
+    }
 
-    const mockPlatforms = [
-      { name: "Mobile Site", color: "#2196F3", data: mobile.modules || [] },
-      { name: "OMS", color: "#9C27B0", data: oms.modules || [] },
-      {
+    // Add Mobile data
+    if (mobile.modules && mobile.modules.length > 0) {
+      bubbleSeries.push({
+        type: "bubble",
+        name: "Mobile Site",
+        data: processModulesForBubble(mobile.modules, "Mobile"),
+        color: "#2196F3",
+      });
+    }
+
+    // Add OMS data
+    if (oms.modules && oms.modules.length > 0) {
+      bubbleSeries.push({
+        type: "bubble",
+        name: "OMS",
+        data: processModulesForBubble(oms.modules, "OMS"),
+        color: "#9C27B0",
+      });
+    }
+
+    // Add Partner Panel data (mapped to android key)
+    if (android.modules && android.modules.length > 0) {
+      bubbleSeries.push({
+        type: "bubble",
         name: "Partner Panel",
+        data: processModulesForBubble(android.modules, "Partner Panel"),
         color: "#FF9800",
-        data: android.modules || [],
-      },
-    ];
-
-    mockPlatforms.forEach((platform) => {
-      if (platform.data.length > 0) {
-        bubbleSeries.push({
-          type: "bubble",
-          name: platform.name,
-          color: platform.color,
-          data: platform.data.map((m: any) => ({
-            x: m.duration || 0,
-            y:
-              m.passed && m.passed + m.failed > 0
-                ? Math.round((m.passed / (m.passed + m.failed)) * 100)
-                : 0,
-            z: (m.passed || 0) + (m.failed || 0),
-            name: m.name,
-          })),
-        });
-      }
-    });
+      });
+    }
 
     const bubbleOptions: Highcharts.Options = {
       chart: {
@@ -748,7 +755,20 @@ function App() {
         zoomType: "xy",
       } as Highcharts.ChartOptions & { zoomType?: "x" | "y" | "xy" },
       exporting: { enabled: false },
-      title: { text: undefined },
+      title: {
+        text: "Journey Performance Analysis",
+        style: {
+          fontSize: "16px",
+          fontWeight: "600",
+        },
+      },
+      subtitle: {
+        text: "Duration vs Success Rate vs Step Count (Bubble Size = Steps)",
+        style: {
+          fontSize: "12px",
+          color: "#666",
+        },
+      },
       xAxis: { title: { text: "Duration (seconds)" }, gridLineWidth: 1 },
       yAxis: {
         title: { text: "Success Rate (%)" },
@@ -762,16 +782,65 @@ function App() {
         headerFormat: "<table>",
         pointFormat:
           '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>' +
+          "<tr><th>Platform:</th><td><strong>{point.platform}</strong></td></tr>" +
+          '<tr><th>Status:</th><td><span style="color: {point.status === "FAILED" ? "#ef4444" : "#22c55e"}">{point.status || "N/A"}</span></td></tr>' +
           "<tr><th>Duration:</th><td>{point.x}s</td></tr>" +
           "<tr><th>Success Rate:</th><td>{point.y}%</td></tr>" +
           "<tr><th>Total Steps:</th><td>{point.z}</td></tr>",
         footerFormat: "</table>",
         followPointer: true,
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        borderColor: "#ccc",
+        borderRadius: 8,
+        shadow: true,
       },
       plotOptions: {
-        series: { dataLabels: { enabled: true, format: "{point.name}" } },
+        bubble: {
+          minSize: 10,
+          maxSize: 50,
+          dataLabels: {
+            enabled: true,
+            format: "{point.name}",
+            style: {
+              fontSize: "10px",
+              fontWeight: "bold",
+              textOutline: "1px contrast",
+            },
+          },
+          marker: {
+            fillOpacity: 0.7,
+            lineWidth: 2,
+            lineColor: "#ffffff",
+          },
+        },
+        series: {
+          cursor: "pointer",
+          point: {
+            events: {
+              click: function () {
+                // Optional: Add click handler for journey details
+                console.log(
+                  "Journey clicked:",
+                  this.name,
+                  "Platform:",
+                  (this as any).platform,
+                );
+              },
+            },
+          },
+        },
       },
       credits: { enabled: false },
+      legend: {
+        align: "center",
+        verticalAlign: "bottom",
+        layout: "horizontal",
+        itemStyle: {
+          fontSize: "12px",
+          color: "#666",
+        },
+        symbolRadius: 8,
+      },
       series: bubbleSeries,
     };
 
@@ -975,7 +1044,7 @@ function App() {
       <div className="chart-card full-width-chart">
         <div className="chart-title">
           <i className="fas fa-chart-scatter" />
-          Module Success Rate Bubble Chart
+          Real-Time Journey Performance Analysis
         </div>
         <div id="bubbleChart" />
       </div>
