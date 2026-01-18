@@ -680,7 +680,11 @@ function App() {
     }
 
     // Helper function to process modules for bubble chart
-    const processModulesForBubble = (modules: any[], platformName: string) => {
+    const processModulesForBubble = (
+      modules: any[],
+      platformName: string,
+      platformData: any,
+    ) => {
       return modules.map((module: any, index: number) => {
         const totalSteps =
           module.totalSteps ||
@@ -699,6 +703,12 @@ function App() {
         const status =
           module.status || (module.failed > 0 ? "FAILED" : "PASSED");
 
+        // Format last run time
+        const lastRun = platformData?.lastRun
+          ? new Date(platformData.lastRun)
+          : null;
+        const lastRunFormatted = lastRun ? lastRun.toLocaleString() : "Unknown";
+
         return {
           x: duration,
           y: Math.round(successRate),
@@ -706,6 +716,7 @@ function App() {
           name: module.name || `${platformName} Journey ${index + 1}`,
           status: status,
           platform: platformName,
+          lastRun: lastRunFormatted,
         };
       });
     };
@@ -717,7 +728,7 @@ function App() {
       bubbleSeries.push({
         type: "bubble",
         name: "Desktop Site",
-        data: processModulesForBubble(desktop.modules, "Desktop"),
+        data: processModulesForBubble(desktop.modules, "Desktop", desktop),
         color: "#4CAF50",
       });
     }
@@ -727,7 +738,7 @@ function App() {
       bubbleSeries.push({
         type: "bubble",
         name: "Mobile Site",
-        data: processModulesForBubble(mobile.modules, "Mobile"),
+        data: processModulesForBubble(mobile.modules, "Mobile", mobile),
         color: "#2196F3",
       });
     }
@@ -737,7 +748,7 @@ function App() {
       bubbleSeries.push({
         type: "bubble",
         name: "OMS",
-        data: processModulesForBubble(oms.modules, "OMS"),
+        data: processModulesForBubble(oms.modules, "OMS", oms),
         color: "#9C27B0",
       });
     }
@@ -747,7 +758,11 @@ function App() {
       bubbleSeries.push({
         type: "bubble",
         name: "Partner Panel",
-        data: processModulesForBubble(android.modules, "Partner Panel"),
+        data: processModulesForBubble(
+          android.modules,
+          "Partner Panel",
+          android,
+        ),
         color: "#FF9800",
       });
     }
@@ -783,20 +798,33 @@ function App() {
       },
       tooltip: {
         useHTML: true,
-        headerFormat: "<table>",
-        pointFormat:
-          '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>' +
-          "<tr><th>Platform:</th><td><strong>{point.platform}</strong></td></tr>" +
-          '<tr><th>Status:</th><td><span style="color: {point.status === "FAILED" ? "#ef4444" : point.status === "PASSED" ? "#22c55e" : "#666"}">{point.status || "UNKNOWN"}</span></td></tr>' +
-          "<tr><th>Duration:</th><td>{point.x}s</td></tr>" +
-          "<tr><th>Success Rate:</th><td>{point.y}%</td></tr>" +
-          "<tr><th>Total Steps:</th><td>{point.z}</td></tr>",
-        footerFormat: "</table>",
         followPointer: true,
         backgroundColor: "rgba(255, 255, 255, 0.95)",
         borderColor: "#ccc",
         borderRadius: 8,
         shadow: true,
+        formatter: function (this: any) {
+          const point = this.point;
+          const status = point.status || "UNKNOWN";
+          const statusColor =
+            status === "FAILED"
+              ? "#ef4444"
+              : status === "PASSED"
+                ? "#22c55e"
+                : "#666";
+
+          return `
+            <table>
+              <tr><th colspan="2"><h3>${point.name}</h3></th></tr>
+              <tr><th>Platform:</th><td><strong>${point.platform}</strong></td></tr>
+              <tr><th>Status:</th><td><span style="color: ${statusColor}">${status}</span></td></tr>
+              <tr><th>Duration:</th><td>${point.x}s</td></tr>
+              <tr><th>Success Rate:</th><td>${point.y}%</td></tr>
+              <tr><th>Total Steps:</th><td>${point.z}</td></tr>
+              <tr><th>Last Run:</th><td><strong>${point.lastRun}</strong></td></tr>
+            </table>
+          `;
+        },
       },
       plotOptions: {
         bubble: {
