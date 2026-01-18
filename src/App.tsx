@@ -695,12 +695,16 @@ function App() {
           totalSteps > 0 ? (passedSteps / totalSteps) * 100 : 0;
         const duration = (module.duration || 0) / 1000; // Convert to seconds
 
+        // Calculate status properly - same logic as JourneyDetailsView
+        const status =
+          module.status || (module.failed > 0 ? "FAILED" : "PASSED");
+
         return {
           x: duration,
           y: Math.round(successRate),
           z: totalSteps,
           name: module.name || `${platformName} Journey ${index + 1}`,
-          status: module.status,
+          status: status,
           platform: platformName,
         };
       });
@@ -783,7 +787,7 @@ function App() {
         pointFormat:
           '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>' +
           "<tr><th>Platform:</th><td><strong>{point.platform}</strong></td></tr>" +
-          '<tr><th>Status:</th><td><span style="color: {point.status === "FAILED" ? "#ef4444" : "#22c55e"}">{point.status || "N/A"}</span></td></tr>' +
+          '<tr><th>Status:</th><td><span style="color: {point.status === "FAILED" ? "#ef4444" : point.status === "PASSED" ? "#22c55e" : "#666"}">{point.status || "UNKNOWN"}</span></td></tr>' +
           "<tr><th>Duration:</th><td>{point.x}s</td></tr>" +
           "<tr><th>Success Rate:</th><td>{point.y}%</td></tr>" +
           "<tr><th>Total Steps:</th><td>{point.z}</td></tr>",
