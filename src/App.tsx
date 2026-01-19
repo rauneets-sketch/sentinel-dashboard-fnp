@@ -12,6 +12,7 @@ import Accessibility from "highcharts/modules/accessibility";
 import axios from "axios";
 import { JourneyDetailsView } from "./components/JourneyDetailsView";
 import "./components/JourneyDetailsView.css";
+import { fetchLatestDesktopData } from "./services/supabaseDataService";
 
 const initModule = (mod: any) => {
   if (typeof mod === "function") {
@@ -199,24 +200,57 @@ function App() {
 
   async function loadData() {
     try {
-      const timestamp = Date.now();
-      const baseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(
-        /\/+$/,
-        "",
-      );
-      const url = `${baseUrl}/api/index?_t=${timestamp}`;
-      const response = await axios.get<TestResultsResponse>(url, {
-        headers: {
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
-        },
-      });
+      console.log("🔍 Loading data - fetching desktop from Supabase...");
+
+      // Fetch desktop data from Supabase
+      const desktopData = await fetchLatestDesktopData();
+
+      // Fetch other platforms from existing API (fallback to mock if needed)
+      let otherPlatformsData = null;
+      try {
+        const timestamp = Date.now();
+        const baseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(
+          /\/+$/,
+          "",
+        );
+        const url = `${baseUrl}/api/index?_t=${timestamp}`;
+        const response = await axios.get<TestResultsResponse>(url, {
+          headers: {
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+          },
+        });
+        otherPlatformsData = response.data;
+      } catch (apiError) {
+        console.log("API call failed, using mock data for other platforms");
+        otherPlatformsData = generateMockData();
+      }
+
+      // Combine Supabase desktop data with other platforms data
+      const combinedData = {
+        ...otherPlatformsData,
+        desktop: desktopData ||
+          otherPlatformsData?.desktop || {
+            total: 0,
+            passed: 0,
+            failed: 0,
+            skipped: 0,
+            duration: 0,
+            lastRun: new Date().toISOString(),
+            modules: [],
+          },
+      };
+
+      console.log("✅ Desktop data from Supabase:", desktopData);
+      console.log("📊 Combined data:", combinedData);
+
       setTestData((prev) => {
-        if (JSON.stringify(prev) === JSON.stringify(response.data)) return prev;
-        return response.data;
+        if (JSON.stringify(prev) === JSON.stringify(combinedData)) return prev;
+        return combinedData;
       });
       setLastRefreshTime(new Date());
-    } catch {
+    } catch (error) {
+      console.error("❌ Error in loadData:", error);
       if (!testData || Object.keys(testData).length === 0) {
         setTestData(generateMockData());
       }
