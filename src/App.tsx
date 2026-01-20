@@ -96,10 +96,13 @@ function App() {
 
   useEffect(() => {
     setLastRefreshTime(new Date());
-    renderLiveStats();
-    renderStats();
-    renderCharts();
-    showModules(currentPlatform);
+    // Add a small delay to ensure DOM elements are ready
+    setTimeout(() => {
+      renderLiveStats();
+      renderStats();
+      renderCharts();
+      showModules(currentPlatform);
+    }, 100);
   }, [testData, currentPlatform]);
 
   useEffect(() => {
@@ -204,7 +207,7 @@ function App() {
         /\/+$/,
         "",
       );
-      const url = `${baseUrl}/api/index?_t=${timestamp}`;
+      const url = `${baseUrl}/api/test-results?_t=${timestamp}`;
       const response = await axios.get<TestResultsResponse>(url, {
         headers: {
           "Cache-Control": "no-cache",
@@ -231,7 +234,11 @@ function App() {
 
   function renderLiveStats() {
     const liveStatsGrid = document.getElementById("liveStatsGrid");
-    if (!liveStatsGrid) return;
+    if (!liveStatsGrid) {
+      console.log("❌ liveStatsGrid element not found");
+      return;
+    }
+    console.log("✅ liveStatsGrid element found, rendering...");
     const desktop = testData.desktop;
     const mobile = testData.mobile;
     const oms = testData.oms;
@@ -273,14 +280,8 @@ function App() {
       `);
     }
 
-    // Mobile Site Card
+    // Mobile Site Card - Show zeros for all values
     if (mobile) {
-      const successRate =
-        mobile.total > 0 ? Math.round((mobile.passed / mobile.total) * 100) : 0;
-      const avgTime = (mobile.duration / 1000).toFixed(3);
-      const status = mobile.failed > 0 ? "ISSUES DETECTED" : "ALL SYSTEMS GO";
-      const statusClass = mobile.failed > 0 ? "status-error" : "status-success";
-
       cards.push(`
         <div class="detailed-stat-card mobile-border">
           <div class="card-header">
@@ -291,14 +292,14 @@ function App() {
             <div class="automation-info">FNP Mobile Automation - Playwright Test Suite</div>
             <div class="platform-info">Platform: <span class="platform-value">MOBILE WEB</span></div>
             <div class="environment-info">Environment: <span class="env-value">prod</span></div>
-            <div class="duration-info">Duration: <span class="duration-value">${mobile.duration}ms</span></div>
-            <div class="journeys-info">User Journeys: <span class="journeys-value">${mobile.modules?.length || 0}</span></div>
-            <div class="steps-info">Test Steps: <span class="steps-value">${mobile.total}</span></div>
-            <div class="success-info">Success Rate: <span class="success-value">${successRate}%</span></div>
-            <div class="avg-time-info">Avg Step Time: <span class="time-value">${avgTime}ms</span></div>
-            <div class="failed-info">Failed Steps: <span class="failed-value">${mobile.failed}</span></div>
+            <div class="duration-info">Duration: <span class="duration-value">0ms</span></div>
+            <div class="journeys-info">User Journeys: <span class="journeys-value">0</span></div>
+            <div class="steps-info">Test Steps: <span class="steps-value">0</span></div>
+            <div class="success-info">Success Rate: <span class="success-value">0%</span></div>
+            <div class="avg-time-info">Avg Step Time: <span class="time-value">0ms</span></div>
+            <div class="failed-info">Failed Steps: <span class="failed-value">0</span></div>
           </div>
-          <div class="card-status ${statusClass}">Status: ${status} ${mobile.failed > 0 ? "⚠" : "✓"}</div>
+          <div class="card-status status-success">Status: NO DATA ⚪</div>
         </div>
       `);
     }
@@ -387,7 +388,11 @@ function App() {
 
   function renderStats() {
     const statsGrid = document.getElementById("statsGrid");
-    if (!statsGrid) return;
+    if (!statsGrid) {
+      console.log("❌ statsGrid element not found");
+      return;
+    }
+    console.log("✅ statsGrid element found, rendering...");
     const platforms: PlatformKey[] = [
       "desktop",
       "mobile",
@@ -399,6 +404,25 @@ function App() {
       .map((platform) => {
         const data = testData[platform];
         if (!data) return "";
+        
+        // For mobile platform, show zeros
+        if (platform === "mobile") {
+          return `
+            <div class="stat-card">
+              <div class="stat-icon mobile-bg">
+                <i class="fas fa-circle-notch"></i>
+              </div>
+              <div class="stat-value">0%</div>
+              <div class="stat-label">Mobile Site Success Rate</div>
+              <div class="stat-details">
+                <div class="stat-detail"><span>Passed:</span><strong>0</strong></div>
+                <div class="stat-detail"><span>Failed:</span><strong>0</strong></div>
+                <div class="stat-detail"><span>Skipped:</span><strong>0</strong></div>
+              </div>
+            </div>
+          `;
+        }
+        
         const passRate =
           data.total > 0 ? Math.round((data.passed / data.total) * 100) : 0;
         const failRate =
