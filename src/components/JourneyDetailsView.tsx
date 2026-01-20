@@ -378,147 +378,7 @@ const DESKTOP_JOURNEYS: Journey[] = [
   },
 ];
 
-const MOBILE_JOURNEYS: Journey[] = [
-  {
-    id: 1,
-    name: "Mobile Home Page Exploration",
-    steps: [
-      { category: "User Authentication", action: "Navigate to Mobile Login" },
-      {
-        category: "User Authentication",
-        action: "Dismiss Mobile Notification",
-      },
-      { category: "User Authentication", action: "Click Mobile Guest Login" },
-      { category: "Homepage Setup", action: "Set Mobile Delivery Location" },
-      {
-        category: "Product Discovery",
-        action: "Navigate to Gift Finder Mobile",
-      },
-      { category: "Product Selection", action: "Select Product on Mobile" },
-      { category: "Cart Management", action: "Add Product to Mobile Cart" },
-      { category: "Payment Process", action: "Mobile Payment Processing" },
-      { category: "Order Completion", action: "Mobile Order Confirmed" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Mobile Payment Methods",
-    steps: [
-      { category: "Product Discovery", action: "Browse Cakes on Mobile" },
-      { category: "Product Selection", action: "Select Cake Product Mobile" },
-      { category: "Delivery Setup", action: "Set Mobile Delivery Date" },
-      { category: "Payment Process", action: "Mobile QR Payment" },
-      { category: "Payment Process", action: "Mobile UPI Payment" },
-      { category: "Payment Process", action: "Mobile Card Payment" },
-      { category: "Order Completion", action: "Mobile Payment Methods Tested" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Mobile Search Purchase",
-    steps: [
-      { category: "Search Function", action: "Mobile Search Bar" },
-      { category: "Product Selection", action: "Select from Search Results" },
-      { category: "Delivery Setup", action: "Set Mobile Delivery Slot" },
-      { category: "Cart Management", action: "Add to Mobile Cart" },
-      { category: "Payment Process", action: "Mobile Payment" },
-      {
-        category: "Order Completion",
-        action: "Mobile Search Purchase Complete",
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: "Mobile Personalized Product",
-    steps: [
-      { category: "Navigation", action: "Navigate to Personalized Products" },
-      { category: "Personalization", action: "Add Custom Text Mobile" },
-      { category: "Cart Management", action: "Add Personalized to Cart" },
-      { category: "Payment Process", action: "Mobile Payment" },
-      { category: "Order Completion", action: "Mobile Personalized Purchase" },
-    ],
-  },
-  {
-    id: 5,
-    name: "Mobile International Purchase",
-    steps: [
-      { category: "Navigation", action: "Navigate to International Section" },
-      {
-        category: "Location Setup",
-        action: "Select International Destination",
-      },
-      { category: "Product Selection", action: "Select International Product" },
-      { category: "Delivery Setup", action: "Set International Delivery" },
-      { category: "Payment Process", action: "International Mobile Payment" },
-      { category: "Order Completion", action: "Mobile International Purchase" },
-    ],
-  },
-  {
-    id: 6,
-    name: "Mobile Location Testing",
-    steps: [
-      { category: "Location Change", action: "Change Mobile Pincode" },
-      { category: "Location Change", action: "Select New Location" },
-      { category: "Navigation", action: "Browse Products by Location" },
-      { category: "Location Change", action: "Switch Location Again" },
-      {
-        category: "Order Completion",
-        action: "Mobile Location Testing Complete",
-      },
-    ],
-  },
-  {
-    id: 7,
-    name: "Mobile Message Card",
-    steps: [
-      { category: "Navigation", action: "Navigate to Product" },
-      { category: "Delivery Setup", action: "Set Delivery Date" },
-      { category: "Message Card", action: "Add Message Card Mobile" },
-      { category: "Payment Process", action: "Mobile Payment" },
-      { category: "Order Completion", action: "Mobile Message Card Purchase" },
-    ],
-  },
-  {
-    id: 8,
-    name: "Mobile Photo Upload",
-    steps: [
-      { category: "Navigation", action: "Navigate to Personalized Product" },
-      { category: "Photo Upload", action: "Upload Photo from Mobile" },
-      { category: "Cart Management", action: "Add to Cart" },
-      { category: "Payment Process", action: "Mobile Payment" },
-      { category: "Order Completion", action: "Mobile Photo Upload Complete" },
-    ],
-  },
-  {
-    id: 9,
-    name: "Mobile Coupon Testing",
-    steps: [
-      { category: "Product Selection", action: "Select Product" },
-      { category: "Cart Management", action: "Add to Cart" },
-      { category: "Coupon Testing", action: "Apply Coupon Code" },
-      { category: "Payment Process", action: "Mobile Payment" },
-      {
-        category: "Order Completion",
-        action: "Mobile Coupon Testing Complete",
-      },
-    ],
-  },
-  {
-    id: 10,
-    name: "Mobile Profile Management",
-    steps: [
-      { category: "Profile Management", action: "Navigate to Profile" },
-      { category: "Profile Management", action: "Update Phone Number" },
-      { category: "Navigation", action: "Return to Homepage" },
-      { category: "Product Discovery", action: "Browse Products" },
-      {
-        category: "Order Completion",
-        action: "Mobile Profile Update Complete",
-      },
-    ],
-  },
-];
+const MOBILE_JOURNEYS: Journey[] = [];
 
 const OMS_JOURNEYS: Journey[] = [
   {
@@ -638,112 +498,22 @@ const OMS_JOURNEYS: Journey[] = [
 const PARTNER_PANEL_JOURNEYS: Journey[] = [
   {
     id: 1,
-    name: "Partner Dashboard Overview",
+    name: "Partner Panel Complete Workflow",
     steps: [
-      { category: "Dashboard", action: "Navigate to Partner Dashboard" },
-      { category: "Dashboard", action: "View Sales Summary" },
-      { category: "Dashboard", action: "Check Performance Metrics" },
-      { category: "Dashboard", action: "View Recent Orders" },
-      { category: "Order Completion", action: "Dashboard Overview Complete" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Partner Order Management",
-    steps: [
-      { category: "Order Management", action: "Navigate to Orders" },
-      { category: "Order Management", action: "View All Orders" },
-      { category: "Order Management", action: "Filter Orders by Status" },
-      { category: "Order Management", action: "View Order Details" },
-      { category: "Order Completion", action: "Order Management Complete" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Partner Inventory Sync",
-    steps: [
-      { category: "Inventory", action: "Navigate to Inventory" },
-      { category: "Inventory", action: "Sync Product Inventory" },
-      { category: "Inventory", action: "Update Stock Levels" },
-      { category: "Inventory", action: "View Inventory History" },
-      { category: "Order Completion", action: "Inventory Sync Complete" },
-    ],
-  },
-  {
-    id: 4,
-    name: "Partner Payment Settlement",
-    steps: [
-      { category: "Payment", action: "Navigate to Payments" },
-      { category: "Payment", action: "View Payment History" },
-      { category: "Payment", action: "Check Settlement Status" },
-      { category: "Payment", action: "Download Payment Report" },
-      { category: "Order Completion", action: "Payment Settlement Complete" },
-    ],
-  },
-  {
-    id: 5,
-    name: "Partner Product Listing",
-    steps: [
-      { category: "Product Management", action: "Navigate to Products" },
-      { category: "Product Management", action: "Add New Product" },
-      { category: "Product Management", action: "Edit Product Details" },
-      { category: "Product Management", action: "Upload Product Images" },
-      { category: "Order Completion", action: "Product Listing Complete" },
-    ],
-  },
-  {
-    id: 6,
-    name: "Partner Performance Analytics",
-    steps: [
-      { category: "Analytics", action: "Navigate to Analytics" },
-      { category: "Analytics", action: "View Sales Trends" },
-      { category: "Analytics", action: "Check Customer Ratings" },
-      { category: "Analytics", action: "Download Analytics Report" },
-      { category: "Order Completion", action: "Analytics Review Complete" },
-    ],
-  },
-  {
-    id: 7,
-    name: "Partner Promotion Management",
-    steps: [
-      { category: "Promotions", action: "Navigate to Promotions" },
-      { category: "Promotions", action: "Create New Promotion" },
-      { category: "Promotions", action: "Set Discount Rules" },
-      { category: "Promotions", action: "Activate Promotion" },
-      { category: "Order Completion", action: "Promotion Management Complete" },
-    ],
-  },
-  {
-    id: 8,
-    name: "Partner Customer Support",
-    steps: [
-      { category: "Support", action: "Navigate to Support Tickets" },
-      { category: "Support", action: "View Customer Queries" },
-      { category: "Support", action: "Respond to Tickets" },
-      { category: "Support", action: "Close Resolved Tickets" },
-      { category: "Order Completion", action: "Customer Support Complete" },
-    ],
-  },
-  {
-    id: 9,
-    name: "Partner Compliance Check",
-    steps: [
-      { category: "Compliance", action: "Navigate to Compliance" },
-      { category: "Compliance", action: "Review Compliance Status" },
-      { category: "Compliance", action: "Update Documentation" },
-      { category: "Compliance", action: "Submit for Verification" },
-      { category: "Order Completion", action: "Compliance Check Complete" },
-    ],
-  },
-  {
-    id: 10,
-    name: "Partner Account Settings",
-    steps: [
-      { category: "Account", action: "Navigate to Account Settings" },
-      { category: "Account", action: "Update Profile Information" },
-      { category: "Account", action: "Change Password" },
-      { category: "Account", action: "Configure Notifications" },
-      { category: "Order Completion", action: "Account Settings Updated" },
+      { category: "Navigation", action: "Home", duration_ms: 427 },
+      { category: "Sales", action: "Sales", duration_ms: 192 },
+      { category: "Order Management", action: "Orders", duration_ms: 190 },
+      { category: "Support", action: "Raise Ticket", duration_ms: 150 },
+      { category: "Support", action: "My Tickets", duration_ms: 147 },
+      { category: "Operations", action: "Bulk Print", duration_ms: 148 },
+      { category: "Operations", action: "Download Challan", duration_ms: 126 },
+      { category: "Performance", action: "SLA", duration_ms: 210 },
+      { category: "Delivery Tracking", action: "Today", duration_ms: 162 },
+      { category: "Delivery Tracking", action: "Tomorrow", duration_ms: 249 },
+      { category: "Delivery Tracking", action: "Future", duration_ms: 249 },
+      { category: "Delivery Status", action: "Out for delivery/Ready for", duration_ms: 159 },
+      { category: "Delivery Status", action: "Delivery Attempted", duration_ms: 240 },
+      { category: "Delivery Status", action: "Delivered", duration_ms: 236 },
     ],
   },
 ];
@@ -770,6 +540,11 @@ export function JourneyDetailsView({
   };
 
   const getJourneyData = (plat: PlatformType): Journey[] => {
+    // For mobile platform, always return empty array (no data display)
+    if (plat === "mobile") {
+      return [];
+    }
+
     // Use real data from Supabase if available, otherwise fall back to mock data
     if (testData && testData[plat] && testData[plat].modules) {
       return testData[plat].modules.map((module: any, index: number) => ({
@@ -857,6 +632,11 @@ export function JourneyDetailsView({
       Support: "#27AE60",
       Compliance: "#F39C12",
       Account: "#16A085",
+      Sales: "#2ECC71",
+      Operations: "#E67E22",
+      Performance: "#9B59B6",
+      "Delivery Tracking": "#3498DB",
+      "Delivery Status": "#E74C3C",
     };
     return colors[category] || "#95A5A6";
   };
